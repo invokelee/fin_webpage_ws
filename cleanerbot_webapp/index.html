@@ -1,0 +1,253 @@
+<html>
+
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- ROS stuff -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/eventemitter2/lib/eventemitter2.min.js"> </script>
+    <script type="text/javascript" src="https://s3.eu-west-1.amazonaws.com/rosject.io/js/roslib.min.js"> </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/easeljs/lib/easeljs.min.js"></script>
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ros2d/build/ros2d.min.js"></script> -->
+    <script src="./libs/ros2d.min.js"></script>
+
+    <!-- 3D visualization -->
+    <!-- <script src="http://static.robotwebtools.org/threejs/current/three.min.js"></script> -->
+    <script src="./libs/three.min.js"></script>
+    <!-- <script src="http://static.robotwebtools.org/threejs/current/ColladaLoader.min.js"></script> -->
+    <script src="./libs/ColladaLoader.js"></script>
+    <!-- <script src="http://static.robotwebtools.org/ColladaAnimationCompress/current/ColladaLoader2.min.js"></script> -->
+    <script src="./libs/ColladaLoader2.js"></script>
+    <!-- <script src="http://static.robotwebtools.org/threejs/current/STLLoader.min.js"></script> -->
+    <script src="./libs/STLLoader.js"></script>
+    <!-- <script src="http://static.robotwebtools.org/ros3djs/current/ros3d.min.js"></script> -->
+    <script src="./libs/ros3d.min.js"></script>
+
+    <!-- Vuejs -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js">
+
+    </script>
+    <script type="text/javascript" src="mjpegcanvas.min.js"> </script>
+
+    <style type="text/css">
+        #dragstartzone {
+            position: relative;
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+            border: 1px solid #333;
+            border-radius: 50%;
+            z-index: 10;
+            -moz-user-select: -moz-none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+        }
+
+        #dragCircle {
+            position: absolute;
+            z-index: 9;
+            border: 1px solid transparent;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 30%);
+            -moz-user-select: -moz-none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+        }
+
+        #dragCircle:hover {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="container-fluid">
+        <div class="row">
+            <div class="col-2 text-center">
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <h3>Connection status</h3>
+                        <p class="text-danger" v-if="!connected">Not connected!</p>
+                        <p class="text-success" v-if="connected">Connected!</p>
+                        <label>ROSBridge address</label>
+                        <br>
+                        <input type="text" v-model="rosbridge_address" />
+                        <br><br>
+                        <button @click="switchTargetEnv" class="btn btn-primary" :disabled="connected"
+                            v-if="targetEnv === 'sim'">Simulation</button>
+                        <button @click="switchTargetEnv" class="btn btn-success" :disabled="connected" v-else>Real
+                            Robot</button>
+
+                        <button :disabled="loading" class="btn btn-danger" @click="disconnect"
+                            v-if="connected">Disconnect!</button>
+                        <button :disabled="loading" class="btn btn-success" @click="connect" v-else>Connect!</button>
+                    </div>
+                </div>
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <h4>Logs</h5>
+                    </div>
+                    <div class="card-body">
+                        <p v-for="log in logs">{{ log }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10">
+                <div>
+                    <h1>Cafe Monitoring</h1>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card mt-2">
+                            <div class="card-header">
+                                <h4>Cafe Robot Map</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="divMap"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="row">
+                            <div class="card mt-2">
+                                <div class="card-header">
+                                    <h4>Robot Control</h4>
+                                </div>
+                                <div class="card mt-2">
+                                    <div class="card-body text-center">
+                                        <h5 class="text-center">TeleOP - Joystick</h5>
+                                        <hr>
+                                        <div id="dragstartzone" @mousedown="startDrag" @mousemove="doDrag">
+                                        </div>
+                                        <div id="dragCircle" :style="dragCircleStyle"></div>
+                                        <p>V: {{ joystick.vertical.toFixed(2) }} H: {{
+                                            joystick.horizontal.toFixed(2) }}</p>
+                                        <hr>
+                                        <button class="mt-1 btn btn-primary" :disabled="!connected"
+                                            @click="upElevator">Lift UP</button>
+                                        <button class="mt-1 btn btn-secondary" :disabled="!connected"
+                                            @click="downElevator">Lift DN</button>
+                                    </div>
+                                </div>
+                                <div class="card mt-2">
+                                    <div class="card-body text-center">
+                                        <h5 class="text-center">Cleaning Cafe</h5>
+                                        <hr>
+                                        <p class="text-center">Actions for Cleaning </p>
+                                        <button class="mt-2 btn btn-primary" :disabled="!connected"
+                                            @click="cleanTable1">Clean Trash Table 1</button>
+                                        <button class="mt-2 btn btn-secondary" :disabled="!connected"
+                                            @click="cleanTable2">Clean Trash Table 2</button>
+                                        <button class="mt-2 btn btn-success" :disabled="!connected"
+                                            @click="discoverTable">Discover and Clean</button>
+                                        <hr>
+                                        <button class="mt-1 btn btn-danger" :disabled="!connected"
+                                            @click="cancelGoal">Cancel</button>
+                                        <button class="mt-1 btn btn-success" :disabled="!connected" @click="goHome">Go
+                                            Home</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card mt-2">
+                            <div class="card-header">
+                                <h4>Cafe Inside View</h4>
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <img height="730" width="730" src="images/cafe_inside_img.png">
+                                </div>
+                                <!-- <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">WP#</th>
+                                            <th scope="col">X</th>
+                                            <th scope="col">Y</th>
+                                            <th scope="col">WP#</th>
+                                            <th scope="col">X</th>
+                                            <th scope="col">Y</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>0</td>
+                                            <td>0.15</td>
+                                            <td>-0.48</td>
+                                            <td>5</td>
+                                            <td>-0.15</td>
+                                            <td>0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>0.74</td>
+                                            <td>-0.48</td>
+                                            <td>6</td>
+                                            <td>-0.15</td>
+                                            <td>-0.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>0.74</td>
+                                            <td>0.48</td>
+                                            <td>7</td>
+                                            <td>-0.57</td>
+                                            <td>-0.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>0.17</td>
+                                            <td>0.48</td>
+                                            <td>8</td>
+                                            <td>-0.15</td>
+                                            <td>0.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>0.17</td>
+                                            <td>0.00</td>
+                                            <td>9</td>
+                                            <td>-0.70</td>
+                                            <td>0.48</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div>
+                                    <label>Target Waypoint #</label>
+                                    <input type="number" min="0" max="9" v-model.number="target_wp" />
+                                    <button :disabled="!connected || action.status.status == 1" @click="sendGoal">Goto
+                                        Waypoint</button>
+                                    <button :disabled="!connected || ![1].includes(action.status.status)"
+                                        @click="cancelGoal">Cancel</button>
+                                </div>
+                                <div>
+                                    <p>Feedback - Position: x [{{ cur_pos.x.toFixed(2)}}],
+                                        y [{{ cur_pos.y.toFixed(2)}}], State: {{ action.feedback.state
+                                        }}</p>
+                                    <p>Action Status: {{action.status.text}}</p>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // We could have loaded main.js simply with:
+        //  <script type="text/javascript" src="main.js">
+        //
+        // BUT we were having caching-related problems.
+        // Loading main.js with a Date.now() in the URL we avoid using cache
+
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'main.js?v=11.' + Date.now();
+        document.head.appendChild(script);
+    </script>
+</body>
+
+</html>
