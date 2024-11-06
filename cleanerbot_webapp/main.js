@@ -13,6 +13,7 @@ var app = new Vue({
         // Model 3D viewer
         viewer: null,
         tfClient: null,
+        arrowNode: null,
         urdfClient: null,
         // Map viewer
         mapViewer: null,
@@ -42,10 +43,14 @@ var app = new Vue({
         pubInterval: null,
         // waypoint
         target_wp: 0,
+        actionClient: null,
+        goal_send_fg: false,
+        goal_id: null,
+        goal_msg: null,
         action: {
-            goal: { position: {x: 0, y: 0, z: 0 } },
-            feedback: { position: 0, state: 'idle' },
-            result: { success: false },
+            goal: { cmd: 'go_home' },
+            feedback: { phase: 'idle' },
+            result: { complete: false },
             status: { status: 0, text: ''},
         },
         cur_pos: {
@@ -71,7 +76,8 @@ var app = new Vue({
         connect: function() {
             this.loading = true
             this.ros = new ROSLIB.Ros({
-                url: this.rosbridge_address
+                url: this.rosbridge_address,
+                groovyCompatibility: false
             })
             this.ros.on('connection', () => {
                 this.logs.unshift((new Date()).toTimeString() + ' - Connected!')
@@ -101,14 +107,22 @@ var app = new Vue({
                     continuous: true,
                 });
 
-                // // Setup a client to listen to TFs.
-                // this.tfClient = new ROSLIB.TFClient({
-                //     ros: this.ros,
-                //     angularThres: 0.01,
-                //     transThres: 0.01,
-                //     rate: 10.0,
-                //     fixedFrame: 'robot_base_link'
-                // });
+                // Setup a client to listen to TFs.
+                this.tfClient = new ROSLIB.TFClient({
+                    ros: this.ros,
+                    angularThres: 0.01,
+                    transThres: 0.01,
+                    rate: 10.0,
+                    fixedFrame: 'map'
+                });
+                this.arrowNode = new ROS3D.SceneNode({
+                    tfClient : this.tfClient,
+                    frameID  : 'robot_base_link',
+                    object   : new ROS3D.Arrow(),        
+                    // object   : new ROS3D.Arrow2(),        
+                });
+                // this.mapViewer.addObject(new ROS3D.Grid());
+                this.mapViewer.scene.add(this.arrowNode);
 
                 // // Setup the URDF client.
                 // this.urdfClient = new ROS3D.UrdfClient({
@@ -192,66 +206,66 @@ var app = new Vue({
             console.log(message)
         },
         cleanTable1: function() {
-            let topic = new ROSLIB.Topic({
-                ros: this.ros,
-                name: '/cmd_vel',
-                messageType: 'geometry_msgs/Twist'
-            })
-            let message = new ROSLIB.Message({
-                linear: { x: 1, y: 0, z: 0, },
-                angular: { x: 0, y: 0, z: 0.5, },
-            })
-            topic.publish(message)
-            console.log(message)
+            if(!this.goal_send_fg) {
+                this.goal_send_fg = true
+                this.actionSendGoal('clean_table1')
+            }
+            console.log("Send command: [clean_table 1]")
         },
         cleanTable2: function() {
-            let topic = new ROSLIB.Topic({
-                ros: this.ros,
-                name: '/cmd_vel',
-                messageType: 'geometry_msgs/Twist'
-            })
-            let message = new ROSLIB.Message({
-                linear: { x: 1, y: 0, z: 0, },
-                angular: { x: 0, y: 0, z: -0.5, },
-            })
-            topic.publish(message)
-            console.log(message)
+            if(!this.goal_send_fg) {
+                this.goal_send_fg = true
+                this.actionSendGoal('clean_table2')
+            }
+            console.log("Send command: [clean_table 2]")
         },
         discoverTable: function() {
-            let topic = new ROSLIB.Topic({
-                ros: this.ros,
-                name: '/cmd_vel',
-                messageType: 'geometry_msgs/Twist'
-            })
-            let message = new ROSLIB.Message({
-                linear: { x: 0, y: 0, z: 0, },
-                angular: { x: 0, y: 0, z: 0, },
-            })
-            topic.publish(message)
+            if(!this.goal_send_fg) {
+                this.goal_send_fg = true
+                this.actionSendGoal('discover_clean')
+            }
+            console.log("Send command: [discovery and clean table]")
         },
         cancelGoal: function() {
-            let topic = new ROSLIB.Topic({
-                ros: this.ros,
-                name: '/cmd_vel',
-                messageType: 'geometry_msgs/Twist'
-            })
-            let message = new ROSLIB.Message({
-                linear: { x: 0, y: 0, z: 0, },
-                angular: { x: 0, y: 0, z: 0, },
-            })
-            topic.publish(message)
+            this.goal_send_fg = false
+            this.actionClient.cancelGoal(this.goal_id)
         },
         goHome: function() {
-            let topic = new ROSLIB.Topic({
-                ros: this.ros,
-                name: '/cmd_vel',
-                messageType: 'geometry_msgs/Twist'
+            if(!this.goal_send_fg) {
+                this.goal_send_fg = true
+                this.actionSendGoal('go_home')
+            }
+            console.log("Send command: [go home]")
+        },
+        actionSendGoal: function(cmd) {
+            this.actionClient = new ROSLIB.Action({
+                ros : this.ros,
+                name : '/clean_table',
+                actionType : 'table_find_interface/CleanTable'
             })
-            let message = new ROSLIB.Message({
-                linear: { x: 0, y: 0, z: 0, },
-                angular: { x: 0, y: 0, z: 0, },
+            this.action.goal.cmd = cmd
+            this.logs.unshift('Goal: ' + cmd)
+            this.goal_msg = new ROSLIB.ActionGoal({
+                cmd: this.action.goal.cmd,
             })
-            topic.publish(message)
+
+            this.goal_id = this.actionClient.sendGoal(this.goal_msg, 
+            //   function(result) {
+            //     this.logs.unshift('Result of action goal : ' + result.complete)
+            //   },
+            //   function(feedback) {
+            //     this.logs.unshift('Feedback : ' + feedback.phase)
+            //   },
+                this.actionResultCallback, 
+                this.actionFeedbackCallback, 
+            )
+        },
+        actionResultCallback: function(result) {
+            this.logs.unshift('Result of action goal : ' + result.complete)
+            this.goal_send_fg = false
+        },
+        actionFeedbackCallback: function(feedback) {
+            this.logs.unshift('Result of action goal : ' + feedback.phase)
         },
         // joystic control command
         moveRobotbByJoysticVals: function () {
@@ -308,44 +322,6 @@ var app = new Vue({
         resetJoystickVals() {
             this.joystick.vertical = 0
             this.joystick.horizontal = 0
-        },
-        sendGoal: function() {
-            let actionClient = new ROSLIB.ActionClient({
-                ros : this.ros,
-                serverName : '/tortoisebot_as',
-                actionName : 'course_web_dev_ros/WaypointActionAction'
-            })
-            this.action.goal.position.x = this.wplist[this.target_wp].x
-            this.action.goal.position.y = this.wplist[this.target_wp].y
-            this.logs.unshift('Goal: ' + this.action.goal.position.x + ', ' 
-                            + this.action.goal.position.y)
-            this.goal = new ROSLIB.Goal({
-                actionClient : actionClient,
-                goalMessage: {
-                    position: this.action.goal.position
-                }
-            })
-
-            this.goal.on('status', (status) => {
-                this.action.status = status
-                // this.logs.unshift(this.action.status.text)
-            })
-
-            this.goal.on('feedback', (feedback) => {
-                this.action.feedback = feedback
-                this.cur_pos.x = feedback.position.x
-                this.cur_pos.y = feedback.position.y
-            })
-
-            this.goal.on('result', (result) => {
-                this.action.result = result
-            })
-
-            this.goal.send()
-            
-        },
-        cancelGoal: function() {
-            this.goal.cancel()
         },
     },
     mounted() {

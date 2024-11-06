@@ -6,7 +6,8 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- ROS stuff -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/eventemitter2/lib/eventemitter2.min.js"> </script>
-    <script type="text/javascript" src="https://s3.eu-west-1.amazonaws.com/rosject.io/js/roslib.min.js"> </script>
+    <!-- <script type="text/javascript" src="https://s3.eu-west-1.amazonaws.com/rosject.io/js/roslib.min.js"> </script> -->
+    <script src="./libs/roslib.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/easeljs/lib/easeljs.min.js"></script>
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ros2d/build/ros2d.min.js"></script> -->
     <script src="./libs/ros2d.min.js"></script>
@@ -27,7 +28,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js">
 
     </script>
-    <script type="text/javascript" src="mjpegcanvas.min.js"> </script>
+    <script type="text/javascript" src="./libs/mjpegcanvas.min.js"> </script>
 
     <style type="text/css">
         #dragstartzone {
@@ -123,9 +124,9 @@
                                         <p>V: {{ joystick.vertical.toFixed(2) }} H: {{
                                             joystick.horizontal.toFixed(2) }}</p>
                                         <hr>
-                                        <button class="mt-1 btn btn-primary" :disabled="!connected"
+                                        <button class="mt-1 btn btn-primary" :disabled="!connected || goal_send_fg"
                                             @click="upElevator">Lift UP</button>
-                                        <button class="mt-1 btn btn-secondary" :disabled="!connected"
+                                        <button class="mt-1 btn btn-secondary" :disabled="!connected || goal_send_fg"
                                             @click="downElevator">Lift DN</button>
                                     </div>
                                 </div>
@@ -134,16 +135,16 @@
                                         <h5 class="text-center">Cleaning Cafe</h5>
                                         <hr>
                                         <p class="text-center">Actions for Cleaning </p>
-                                        <button class="mt-2 btn btn-primary" :disabled="!connected"
+                                        <button class="mt-2 btn btn-primary" :disabled="!connected || goal_send_fg"
                                             @click="cleanTable1">Clean Trash Table 1</button>
-                                        <button class="mt-2 btn btn-secondary" :disabled="!connected"
+                                        <button class="mt-2 btn btn-secondary" :disabled="!connected || goal_send_fg"
                                             @click="cleanTable2">Clean Trash Table 2</button>
-                                        <button class="mt-2 btn btn-success" :disabled="!connected"
+                                        <button class="mt-2 btn btn-success" :disabled="!connected || goal_send_fg"
                                             @click="discoverTable">Discover and Clean</button>
                                         <hr>
-                                        <button class="mt-1 btn btn-danger" :disabled="!connected"
+                                        <button class="mt-1 btn btn-danger" :disabled="!connected || !goal_send_fg"
                                             @click="cancelGoal">Cancel</button>
-                                        <button class="mt-1 btn btn-success" :disabled="!connected" @click="goHome">Go
+                                        <button class="mt-1 btn btn-success" :disabled="!connected || goal_send_fg" @click="goHome">Go
                                             Home</button>
                                     </div>
                                 </div>
