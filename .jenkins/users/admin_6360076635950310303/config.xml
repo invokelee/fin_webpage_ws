@@ -1,0 +1,50 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<user>
+  <version>10</version>
+  <id>admin</id>
+  <fullName>admin</fullName>
+  <description></description>
+  <properties>
+    <jenkins.security.ApiTokenProperty>
+      <tokenStore>
+        <tokenList/>
+      </tokenStore>
+    </jenkins.security.ApiTokenProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <roles>
+        <string>authenticated</string>
+      </roles>
+      <timestamp>1731475632146</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.model.MyViewsProperty>
+      <primaryViewName></primaryViewName>
+      <views>
+        <hudson.model.AllView>
+          <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
+          <name>all</name>
+          <filterExecutors>false</filterExecutors>
+          <filterQueue>false</filterQueue>
+          <properties class="hudson.model.View$PropertyList"/>
+        </hudson.model.AllView>
+      </views>
+    </hudson.model.MyViewsProperty>
+    <hudson.model.PaneStatusProperties>
+      <collapsed/>
+    </hudson.model.PaneStatusProperties>
+    <hudson.security.HudsonPrivateSecurityRealm_-Details>
+      <passwordHash>#jbcrypt:$2a$10$rn9xpZkmwfRw.p79IqGbTObA20HIuhmVMBWD.HrXTQaPnwxG/nhDu</passwordHash>
+    </hudson.security.HudsonPrivateSecurityRealm_-Details>
+    <jenkins.security.seed.UserSeedProperty>
+      <seed>db176911efc9fe38</seed>
+    </jenkins.security.seed.UserSeedProperty>
+    <hudson.search.UserSearchProperty>
+      <insensitiveSearch>true</insensitiveSearch>
+    </hudson.search.UserSearchProperty>
+    <hudson.model.TimeZoneProperty>
+      <timeZoneName></timeZoneName>
+    </hudson.model.TimeZoneProperty>
+    <jenkins.model.experimentalflags.UserExperimentalFlagsProperty>
+      <flags/>
+    </jenkins.model.experimentalflags.UserExperimentalFlagsProperty>
+  </properties>
+</user>

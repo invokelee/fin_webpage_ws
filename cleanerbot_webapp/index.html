@@ -137,14 +137,16 @@
                                         <p class="text-center">Actions for Cleaning </p>
                                         <button class="mt-2 btn btn-primary" :disabled="!connected || goal_send_fg"
                                             @click="cleanTable1">Clean Trash Table 1</button>
-                                        <button class="mt-2 btn btn-secondary" :disabled="!connected || goal_send_fg"
-                                            @click="cleanTable2">Clean Trash Table 2</button>
+                                        <button v-if="targetEnv === 'sim'" class="mt-2 btn btn-secondary"
+                                            :disabled="!connected || goal_send_fg" @click="cleanTable2">Clean Trash
+                                            Table 2</button>
                                         <button class="mt-2 btn btn-success" :disabled="!connected || goal_send_fg"
                                             @click="discoverTable">Discover and Clean</button>
                                         <hr>
                                         <button class="mt-1 btn btn-danger" :disabled="!connected || !goal_send_fg"
                                             @click="cancelGoal">Cancel</button>
-                                        <button class="mt-1 btn btn-success" :disabled="!connected || goal_send_fg" @click="goHome">Go
+                                        <button class="mt-1 btn btn-success" :disabled="!connected || goal_send_fg"
+                                            @click="goHome">Go
                                             Home</button>
                                     </div>
                                 </div>

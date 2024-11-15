@@ -8,11 +8,14 @@ var app = new Vue({
         loading: false,
         rosbridge_address: 'wss://i-0eb9e495286f3e0ba.robotigniteacademy.com/a881afb5-27d7-457e-a771-e2795f4e8480/rosbridge/',
         port: '9090',
-        targetEnv: 'sim',
+        targetEnv: 'real',
+        cmd_topic: null,
         lift_topic: null,
         // Model 3D viewer
         viewer: null,
         tfClient: null,
+        tfFixedFrame: null,
+        targetTfId: null,
         arrowNode: null,
         urdfClient: null,
         // Map viewer
@@ -47,29 +50,13 @@ var app = new Vue({
         goal_send_fg: false,
         goal_id: null,
         goal_msg: null,
+        actName: null,
         action: {
             goal: { cmd: 'go_home' },
             feedback: { phase: 'idle' },
             result: { complete: false },
             status: { status: 0, text: ''},
         },
-        cur_pos: {
-            x: 0,
-            y: 0,
-        },
-        wplist: [
-            {x: 0.15, y: -0.48},
-            {x: 0.74, y: -0.48},
-            {x: 0.74, y:  0.48},
-            {x: 0.17, y:  0.48},
-            {x: 0.17, y:  0},
-            {x:-0.15, y:  0},
-            {x:-0.15, y: -0.50},
-            {x:-0.57, y: -0.50},
-            {x:-0.15, y:  0.50},
-            {x:-0.70, y:  0.48},
-        ],
-
     },
     // helper methods to connect to ROS
     methods: {
@@ -85,10 +72,6 @@ var app = new Vue({
                 this.loading = false
                 // 3D Viewer
                 // this.setup3DViewer()
-                // if(this.targetEnv == 'sim')
-                //     this.lift_topic = '/elevator_up'
-                // else
-                //     this.lift_topic = '/set_elevator'
 
                 // Map Viewer 3D
                 this.mapViewer = new ROS3D.Viewer({
@@ -108,16 +91,32 @@ var app = new Vue({
                 });
 
                 // Setup a client to listen to TFs.
+                if(this.targetEnv == 'real') {
+                    this.targetTfId = 'cleaner_2/base_link'
+                    this.tfFixedFrame = 'cleaner_2/map'
+                    // this.targetTfId = 'base_link'
+                    // this.tfFixedFrame = 'map'
+                }
+                else {
+                    this.targetTfId = 'robot_base_link'
+                    this.tfFixedFrame = 'map'
+                }
                 this.tfClient = new ROSLIB.TFClient({
                     ros: this.ros,
                     angularThres: 0.01,
                     transThres: 0.01,
                     rate: 10.0,
-                    fixedFrame: 'map'
+                    // fixedFrame: 'map'
+                    fixedFrame: this.tfFixedFrame
+                });
+                console.log(this.tfFixedFrame + " -> " + this.targetTfId)
+                this.tfClient.subscribe(this.targetTfId, function(tf) {
+                    console.log(tf);
                 });
                 this.arrowNode = new ROS3D.SceneNode({
                     tfClient : this.tfClient,
-                    frameID  : 'robot_base_link',
+                    frameID  : this.targetTfId,
+                    // frameID  : 'robot_base_link',
                     object   : new ROS3D.Arrow(),        
                     // object   : new ROS3D.Arrow2(),        
                 });
@@ -229,6 +228,7 @@ var app = new Vue({
         cancelGoal: function() {
             this.goal_send_fg = false
             this.actionClient.cancelGoal(this.goal_id)
+            console.log("Send command: cancel Goal")
         },
         goHome: function() {
             if(!this.goal_send_fg) {
@@ -238,9 +238,14 @@ var app = new Vue({
             console.log("Send command: [go home]")
         },
         actionSendGoal: function(cmd) {
+            if(this.targetEnv == 'real')
+                this.actName = '/cleaner_2/clean_table'
+            else
+                this.actName = '/clean_table'
+                
             this.actionClient = new ROSLIB.Action({
                 ros : this.ros,
-                name : '/clean_table',
+                name : this.actName,
                 actionType : 'table_find_interface/CleanTable'
             })
             this.action.goal.cmd = cmd
@@ -269,10 +274,16 @@ var app = new Vue({
         },
         // joystic control command
         moveRobotbByJoysticVals: function () {
+            if(this.targetEnv == 'sim')
+                this.cmd_topic = '/diffbot_base_controller/cmd_vel_unstamped'
+            else
+                this.cmd_topic = '/cleaner_2/cmd_vel'
+
             let topic = new ROSLIB.Topic({
                 ros: this.ros,
                 // name: '/cmd_vel',
-                name: '/diffbot_base_controller/cmd_vel_unstamped',
+                // name: '/diffbot_base_controller/cmd_vel_unstamped',
+                name: this.cmd_topic,
                 messageType: 'geometry_msgs/Twist'
             })
             this.lx = this.joystick.vertical * this.kv
