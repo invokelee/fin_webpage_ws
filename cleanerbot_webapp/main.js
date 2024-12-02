@@ -6,7 +6,8 @@ var app = new Vue({
         ros: null,
         logs: [],
         loading: false,
-        rosbridge_address: 'wss://i-0eb9e495286f3e0ba.robotigniteacademy.com/a881afb5-27d7-457e-a771-e2795f4e8480/rosbridge/',
+        // rosbridge_address: 'wss://i-0eb9e495286f3e0ba.robotigniteacademy.com/a881afb5-27d7-457e-a771-e2795f4e8480/rosbridge/',
+        rosbridge_address: 'ws://172.24.67.209:9090',
         port: '9090',
         targetEnv: 'real',
         cmd_topic: null,
@@ -24,6 +25,7 @@ var app = new Vue({
         interval: null,       
             // dragging data
         dragging: false,
+        j_stopped: true,
         drg_x: 'no',
         drg_y: 'no',
         dragCircleStyle: {
@@ -288,11 +290,24 @@ var app = new Vue({
             })
             this.lx = this.joystick.vertical * this.kv
             this.az = this.joystick.horizontal * this.kv * this.angular_dir
+
             let message = new ROSLIB.Message({
                 linear: { x: this.lx, y: 0, z: 0, },
                 angular: { x: 0, y: 0, z: this.az, },
             })
-            topic.publish(message)
+            if(this.goal_send_fg != true) {
+                if(this.j_stopped) {
+                    if(this.lx + this.az != 0.0) {
+                        topic.publish(message)
+                        this.j_stopped = false
+                    }
+                }
+                else {
+                    topic.publish(message)
+                    if(this.lx + this.az == 0.0)
+                        this.j_stopped = true
+                }
+            }
         },
         startDrag() {
             this.dragging = true

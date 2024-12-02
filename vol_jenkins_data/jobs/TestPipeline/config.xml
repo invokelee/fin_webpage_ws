@@ -1,0 +1,55 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1468.vcf4f5ee92395">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2218.v56d0cda_37c72"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2218.v56d0cda_37c72">
+      <jobProperties/>
+      <triggers/>
+      <parameters/>
+      <options/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <description>A test pipeline that moves and then stops the robot on The Construct</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@3996.va_f5c1799f978">
+    <script>pipeline {
+    agent any 
+    stages {
+        stage(&apos;Print and list current directory&apos;) {
+            steps {
+                sh &apos;pwd&apos;
+                sh &apos;ls -al&apos;
+            }
+        }
+        stage(&apos;Show ROS environment variables&apos;) {
+            steps {
+                sh &apos;env | grep ROS&apos;
+            }
+        }
+        stage(&apos;Topic List and echo&apos;) {
+            steps {
+                sh &apos;&apos;&apos;
+                . /opt/ros/humble/setup.bash
+                ros2 topic list
+                ros2 topic echo /rosout &amp;
+                NODE_ID=$!
+                sleep 10s
+                kill $NODE_ID
+                &apos;&apos;&apos;
+            }
+        }
+        stage(&apos;Done&apos;) {
+            steps {
+                sleep 5
+                echo &apos;Pipeline completed&apos;
+            }
+        }
+    }
+}
+</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
