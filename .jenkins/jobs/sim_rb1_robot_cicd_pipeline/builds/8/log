@@ -1,0 +1,182 @@
+Started by user [8mha:////4BBZ7K0vf/O4j/ERyJ3mMi0rTANFdn2pGSY4LqysbsLUAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzeEgZu/dLi1CL9xJTczDwACG0V4sAAAAA=[0mAdministrator
+[8mha:////4B5NjIIm3MmJ2Fw/hziLzjPY+yX818ve/dZJ3oyoEwo+AAAAoh+LCAAAAAAAAP9tjTEOwjAQBM8BClpKHuFItIiK1krDC0x8GCfWnbEdkooX8TX+gCESFVvtrLSa5wtWKcKBo5UdUu8otU4GP9jS5Mixv3geZcdn2TIl9igbHBs2eJyx4YwwR1SwULBGaj0nRzbDRnX6rmuvydanHMu2V1A5c4MHCFXMWcf8hSnC9jqYxPTz/BXAFEIGsfuclm8zQVqFvQAAAA==[0m[Pipeline] Start of Pipeline
+[8mha:////4ACT3zNes+3/oYs3m8Tr7XHmPYifWwnVH+BMdsCcZkb0AAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycohUghExsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jduZBmjwAAAAA==[0m[Pipeline] node
+Running on [8mha:////4Iy+tRaUwM4dtScOScBe9HGi1pDWgNCST71XuJePJlq/AAAAoR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAz2EgZR/eT83ILSktQifY2k0sycEt3MPE19AHHxbH3KAAAA[0mJenkins in /home/invokelee/final_project/webpage_ws/.jenkins/workspace/sim_rb1_robot_cicd_pipeline
+[8mha:////4ADBqDWJvAVQ7wpIqZEQhYC5AQ4uIA1aDfQCNhYzJ/3eAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gA0xsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jfoP95RwAAAAA==[0m[Pipeline] {
+[8mha:////4PjnLrWH/J3j9TFs6kTJHDVpGAA0gQddwMzqmeDbq2WkAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gQkxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jc09154wAAAAA==[0m[Pipeline] stage
+[8mha:////4L4hDhSRKs1vRYr5+JoazmfL5bZj93o63suxeOoLU3KCAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0ggUxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jek7ggRwAAAAA==[0m[Pipeline] { (Login to Docker Hub)
+[8mha:////4Bcu4hbAm4bz9fomc/cHgW84seGn9ScmIGXYdehqBAEiAAAAoh+LCAAAAAAAAP9tjTEOAiEURD9rLGwtPQTbaWGsbAmNJ0AWEZb8zwLrbuWJvJp3kLiJlZNMMm+a93rDOic4UbLcG+wdZu14DKOti0+U+lugiXu6ck2YKRguzSSpM+cFJRUDS1gDKwEbgzpQdmgLbIVXD9UGhba9lFS/o4DGdQM8gYlqLiqVL8wJdvexy4Q/z18BzLEA29ce4gfg7KmOvAAAAA==[0m[Pipeline] sh
++ cat /home/invokelee/final_project/ros2_ws/src/fin_devops_docker/.my_password.txt
++ docker login --username invokelee --password-stdin
+WARNING! Your password will be stored unencrypted in /home/invokelee/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[8mha:////4EvWVTF75+JExV1UiPmzmZFnj5Cx1hMD8o+za2Ylf0DuAAAAoh+LCAAAAAAAAP9tjTEOAiEURD9rLGwtPQTbGRNjZUtoPAGyiLDkfxZYdytP5NW8g8RNrJxkknnTvNcb1jnBiZLl3mDvMGvHYxhtXXyi1N8CTdzTlWvCTMFwaSZJnTkvKKkYWMIaWAnYGNSBskNbYCu8eqg2KLTtpaT6HQU0rhvgCUxUc1GpfGFOsLuPXSb8ef4KYI6xADvU7j9Dg2gqvAAAAA==[0m[Pipeline] }
+[8mha:////4CyhN7ReVe4enwlJU+fANya2KxFhoX69l6+WQYwo1OcuAAAAoh+LCAAAAAAAAP9tjTEOAiEURD9rLGwtPQRbWRhjZUtoPAGyiLDkfxZYdytP5NW8g8RNrJxkknnTvNcb1jnBiZLl3mDvMGvHYxhtXXyi1N8CTdzTlWvCTMFwaSZJnTkvKKkYWMIaWAnYGNSBskNbYCu8eqg2KLTtpaT6HQU0rhvgCUxUc1GpfGFOsLuPXSb8ef4KYI6xADvU7j9J+wGOvAAAAA==[0m[Pipeline] // stage
+[8mha:////4HyVAnLkZpYoyKRZMfUzNQj3BiLV5kyTPoX2L0B5vU5gAAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQDEh2iorXc8AITG+PEugv2haTiRXyNPxCIRMVWOyut5vmCMic4UPKycdgGzHWQXez91ORAqb1EGmRDZ1kTZopOajdosu44oyZ2MEcUsFCwdFhHygE9w0o15m6qaNBXJ07TtldQBHuDBwg1mdkk/sKYYH3tbSb8ef4KYOwYxI6h2G4+x/INtuQqUcEAAAA=[0m[Pipeline] stage
+[8mha:////4Fiam7+iswzKIjToXzteQqoddXXx+ixHckpCwxhfnqJ0AAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycoiUzoiJNerCCUITQtLo/zZJSSdOxNW4Ay2VmPBg2Zas93pDGQOcKBjuNHYWY2t570czJ54pdDdPmTu68pYwkte80bkhpc9rbShpWFUw2AjYamw9RYsmwU44+ZCVl2iqSwrzdhTArBrgCYWYyUmG9C1TgP19VJHwx/kLgKlPwOrDYvXyLD8BobDcwgAAAA==[0m[Pipeline] { (Build Docker image)
+[8mha:////4G3z2KJ3tK9iX/FXMfKa/54OL5Vst+ZP3BDwv37BFxLeAAAAox+LCAAAAAAAAP9tjTESwiAURH/iWNhaeggysXWsbBkaT4AJIoT5nwCRVJ7Iq3kH0cxYucXOvm3e8wXrGOBIQTOrcDAYO8O8m3RZLFMYro4ys3RhHWEkp5hQWVCvTgsKSgqWVDWsOGwUdo6iQZ1gy628y8ZJ1M05hfIdONSmH+EBFS/mJEP6whxgd5v6SPjz/BXA7BPUbfupvX8DpQJrNb4AAAA=[0m[Pipeline] sh
++ cd /home/invokelee/final_project/ros2_ws/src/fin_devops_docker
++ docker build -f final_base_docker/Dockerfile -t invokelee/ros2-final-project-base:1.5 /home/invokelee/final_project
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.42kB 0.0s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/osrf/ros:humble-desktop
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [ 1/30] FROM docker.io/osrf/ros:humble-desktop
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 141.66kB 0.5s done
+#5 DONE 0.6s
+
+#6 [21/30] COPY ./simulation_ws/src/universal_robot_ros2   ./universal_robot_ros2
+#6 CACHED
+
+#7 [19/30] COPY ./simulation_ws/src/rosbridge_suite        ./rosbridge_suite
+#7 CACHED
+
+#8 [ 6/30] RUN source /opt/ros/humble/setup.bash  && mkdir -p /ros2_ws/src  && mkdir -p /simulation_ws/src  && mkdir -p /webpage_ws/src  && cd /ros2_ws/src
+#8 CACHED
+
+#9 [28/30] RUN source /opt/ros/humble/setup.bash  && cd /simulation_ws  && colcon build
+#9 CACHED
+
+#10 [25/30] COPY ./webpage_ws/cleanerbot_webapp   ./cleanerbot_webapp
+#10 CACHED
+
+#11 [ 8/30] COPY ./ros2_ws/src/cartographer_slam     ./cartographer_slam
+#11 CACHED
+
+#12 [17/30] COPY ./simulation_ws/src/course_web_dev_ros     ./course_web_dev_ros
+#12 CACHED
+
+#13 [12/30] COPY ./ros2_ws/src/table_find_interface  ./table_find_interface
+#13 CACHED
+
+#14 [15/30] WORKDIR /simulation_ws/src
+#14 CACHED
+
+#15 [29/30] RUN echo "source /simulation_ws/install/setup.bash" >> ~/.bashrc
+#15 CACHED
+
+#16 [ 2/30] RUN apt update  && apt install -y ros-dev-tools  && apt install -y ros-humble-joint-*  && apt install -y ros-humble-cartographer*  && apt install -y ros-humble-navigation2  && apt install -y ros-humble-nav2-bringup  && apt install -y ros-humble-ros2-control  && apt install -y ros-humble-ros2-controllers  && apt install -y ros-humble-gazebo-ros2-control  && apt install -y ros-humble-topic-tools
+#16 CACHED
+
+#17 [14/30] RUN cd /simulation_ws/src
+#17 CACHED
+
+#18 [18/30] COPY ./simulation_ws/src/rb1_ros2               ./rb1_ros2
+#18 CACHED
+
+#19 [ 3/30] RUN apt install -y python-is-python3 python3-pip vim net-tools
+#19 CACHED
+
+#20 [16/30] COPY ./simulation_ws/src/async_web_server_cpp   ./async_web_server_cpp
+#20 CACHED
+
+#21 [ 5/30] RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+#21 CACHED
+
+#22 [11/30] COPY ./ros2_ws/src/path_planner_server   ./path_planner_server
+#22 CACHED
+
+#23 [24/30] WORKDIR /webpage_ws
+#23 CACHED
+
+#24 [13/30] COPY ./ros2_ws/src/trash_table_detection ./trash_table_detection
+#24 CACHED
+
+#25 [27/30] RUN cd /simulation_ws  && rosdep fix-permissions && rosdep update  && rosdep install --from-paths src -i -y --rosdistro humble --ignore-src
+#25 CACHED
+
+#26 [ 4/30] RUN pip install pyquaternion
+#26 CACHED
+
+#27 [20/30] COPY ./simulation_ws/src/tf2_web_republisher_py ./tf2_web_republisher_py
+#27 CACHED
+
+#28 [26/30] RUN source /opt/ros/humble/setup.bash  && cd /ros2_ws  && colcon build
+#28 CACHED
+
+#29 [10/30] COPY ./ros2_ws/src/map_server            ./map_server
+#29 CACHED
+
+#30 [22/30] RUN rm -rf ./universal_robot_ros2/gazebo_ros2_control
+#30 CACHED
+
+#31 [ 9/30] COPY ./ros2_ws/src/localization_server   ./localization_server
+#31 CACHED
+
+#32 [23/30] RUN cd /webpage_ws
+#32 CACHED
+
+#33 [ 7/30] WORKDIR /ros2_ws/src
+#33 CACHED
+
+#34 [30/30] WORKDIR /ros2_ws
+#34 CACHED
+
+#35 exporting to image
+#35 exporting layers done
+#35 writing image sha256:2062a68af99bb15e553734723fcbe297a33052d640dc02a3d0e8a232e8356082 0.0s done
+#35 naming to docker.io/invokelee/ros2-final-project-base:1.5 0.0s done
+#35 DONE 0.1s
+[8mha:////4GSpCZOsuEyS+IqucEXYO2ysdosWIBTC8VCFDJx9+OEeAAAAox+LCAAAAAAAAP9tjTESwiAURH/iWNhaeggyGUvHypah8QSYIEKY/wkQSeWJvJp3EM2MlVvs7NvmPV+wjgGOFDSzCgeDsTPMu0mXxTKF4eooM0sX1hFGcooJlQX16rSgoKRgSVXDisNGYecoGtQJttzKu2ycRN2cUyjfgUNt+hEeUPFiTjKkL8wBdrepj4Q/z18BzN4nqNv9p9o3geV5574AAAA=[0m[Pipeline] }
+[8mha:////4G5r4A1TyN02gcYJNp81znadpTUPlTNgU9Uz6co3MvtKAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOICEh2iSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwhQ7nbf2r7Bq/le42+AAAA[0m[Pipeline] // stage
+[8mha:////4Eey7zo1vcXQCKxLOecdkwFHbLhKkaJoDYo6Ce8qg9z3AAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQjJKgQFa3lhheY2Bgn1l2wLyQVL+Jr/IFAJCq22llpNc8XlDnBgZKXjcM2YK6D7GLvpyYHSu0l0iAbOsuaMFN0UrtBk3XHGTWxgzmigIWCpcM6Ug7oGVaqMXdTRYO+OnGatr2CItgbPECoycwm8RfGBOtrbzPhz/NXAGPHILYMxWb3OZZvBXXnAcEAAAA=[0m[Pipeline] stage
+[8mha:////4AutPG9l4GQMV/vbFdJwfcYy4Zd8FwzwagjwyIFi2gYQAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUDLAgpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYJ8t5/tMD+LD/s94rDCAAAA[0m[Pipeline] { (Docker compose up and Start up the service)
+[8mha:////4BF48wRx0JLEwx145e7F2iPp5fZQoG4KXGeMDk3jA81jAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiGigQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUG53n9qHN27Iu42+AAAA[0m[Pipeline] sh
++ + docker ps
+grep fin_devops_docker-sim_
++ awk {print $1}
++ DK_SIM_PS=4fe972d78ff6
+279734f8383c
+ade0ae1deaba
+484ded9fb085
++ docker ps
++ grep fin_devops_docker-real_
++ awk {print $1}
++ DK_REAL_PS=
++ [ ! -z 4fe972d78ff6
+279734f8383c
+ade0ae1deaba
+484ded9fb085 -a 4fe972d78ff6
+279734f8383c
+ade0ae1deaba
+484ded9fb085 !=   ]
++ echo Service is running in simulation... Now it will be restarted
+Service is running in simulation... Now it will be restarted
++ cd /home/invokelee/final_project/ros2_ws/src/fin_devops_docker
++ docker compose -f sim_final_docker_compose.yml restart
+ Container fin_devops_docker-sim_gazebo_simulation_docker-1  Restarting
+ Container fin_devops_docker-sim_navigation_docker-1  Restarting
+ Container fin_devops_docker-sim_trash_table_mgmt_docker-1  Restarting
+ Container fin_devops_docker-sim_web_app_docker-1  Restarting
+ Container fin_devops_docker-sim_navigation_docker-1  Started
+ Container fin_devops_docker-sim_web_app_docker-1  Started
+ Container fin_devops_docker-sim_trash_table_mgmt_docker-1  Started
+ Container fin_devops_docker-sim_gazebo_simulation_docker-1  Started
+[8mha:////4Ceq4wfgfdVOWLOm7iC4how5YbWsK7pXW81A+9H+UE7nAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiGoSEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFBu95/avQHhgNoTvgAAAA==[0m[Pipeline] }
+[8mha:////4BrzNpbrCv1IdZbDClNWF8ZIUqmbgPJFzXSwQZbm9OWQAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiCgqEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFBu95/avQH+Ao9BvgAAAA==[0m[Pipeline] // stage
+[8mha:////4MON4ziJY+8Ic6pdXnaU5ly4txKp3xKv1TFrK2ygOZBxAAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYSDEB2iorXc8AITG+PEugv2haTiRXyNPxCIRMVWOyut5vmCMic4UPKycdgGzHWQXez91ORAqb1EGmRDZ1kTZopOajdosu44oyZ2MEcUsFCwdFhHygE9w0o15m6qaNBXJ07TtldQBHuDBwg1mdkk/sKYYH3tbSb8ef4KYOwYxI6h2G4+x/INK/7CYMEAAAA=[0m[Pipeline] stage
+[8mha:////4AufPakgdwe61LUGo5Gbgh6cvN7TeSlw9dYgKXPyaA7cAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycogUWBFT1ygLJwhNCGmj/8tPSjtxIq7GHWipxIQHy7ZkvdcbishwInaisdh6jLUXXejdlMRA3F4DDaKhi6gJIwUrlB0UGVstVVGysCjLYSVhbbEOFD26BBvZ6Icug0ZXnhNP21FC7s0dnpDJiZw0p28ZGba33kTCH+cvAMYuQX7Yzbafn8UHbGnGmsIAAAA=[0m[Pipeline] { (Done)
+[8mha:////4D41bJVwYKt6s51Hm97bszeeXhhhkj/Txc769vcP5K5kAAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIi0iIqWisNLzCJMXasO8d2cCpexNf4A4FIVGyx2tlmni9YxwBHDhqtot5QbA16N+p5YebQXx1ntHzBlimyU9io3HCnTgs2nBQsKUpYCdgoah1HQzrBVlh5l5WTpKtzCvN3EFCaboAHFGI2JxnSF6YAu9vYRaaf568AJp+grPefqv0bH7uiub4AAAA=[0m[Pipeline] sh
++ echo Final Project in Simulation - Docker build and compose up Pipeline job completed !
+Final Project in Simulation - Docker build and compose up Pipeline job completed !
+[8mha:////4IRvYMGR4wefDYTLzCzapjbaUlz0N1C7CSGlnwiVBXiyAAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIioERUaS03vMDExjix7oztkFS8iK/xBwKRqNhitbPNPF+wTBGOHC22hjpHqXEYfG+nhQPH7uJ5wJbP2DAl9galGSRrU88oORuYU5SwELAy1HhOjmyGtWjVXVVeka1OOU7fQUDp9A0eUIjJnFXMXxgjbK69Tkw/z18BjCFkKHf7T23f36y8/b4AAAA=[0m[Pipeline] }
+[8mha:////4CSDfH329LCJ2ArnDc3iDzOkIvuTz3j/4qUJTGzo3vS4AAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKCEB2iSmu54QUmNsaJdWdsh6TiRXyNPxCIRMUWq51t5vmCZYpw5GixNdQ5So3D4Hs7LRw4dhfPA7Z8xoYpsTcozSBZm3pGydnAnKKEhYCVocZzcmQzrEWr7qryimx1ynH6DgJKp2/wgEJM5qxi/sIYYXPtdWL6ef4KYAwhQ7nbf2r7BvGsvpe+AAAA[0m[Pipeline] // stage
+[8mha:////4D/shxkmi+129db8fajsMnc9TMXR4lOHaeIMj6KlXgsPAAAAox+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMKREFSIitZKwwtMYowT6y7YF5KKF/E1/kBEJCq22plmXm8sU8SRo1ONpdZTqrzqQu+mpwaO7TXwoBq+qIopcbCqtEPJtT3NWLJYzMtyLDRWlqrAyZMTrHVjHqYIhlxxlji5g0bu6zueyPRUFhPlC2PE5tbXienX+RvA2HWCfLsXZLsPW9YxnL0AAAA=[0m[Pipeline] }
+[8mha:////4O3FppDkyF2U5fTvLSGSRctILrNIQdMwNraOkj/o6eOnAAAApB+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMKRQKJBVLRWGl5gEmOcWHfBvpBUvIiv8QciIlGx1c4083pjmSKOHJ1qLLWeUuVVF3o3PTVwbK+BB9XwRVVMiYNVpR1Kru1pxpLFYl6WY6GxslQFTp6cYK0b8zBFMOSKs8TJHTRyX9/xRKanspgoXxgjNre+Tky/zt8Axq4T5Nu9INt9ACg59UW9AAAA[0m[Pipeline] // node
+[8mha:////4HuupZdIoEkK1NehHtnhPdAqVTswwdhLjBmrIn1gLvRjAAAAox+LCAAAAAAAAP9tjbEOgjAURS8YB1dHP6IkLA7GybVh8Qsq1Fpo3sP2IUx+kb/mP0gkcfJO95zlvN5Yp4gjR6daS52nVHvVh8HNT40cu2vgUbV8UTVT4mBVZceKG3tasGKxWJblWGlsLNWBkycn2OrWPEwRDLniLHF2B43cN3c8kem5LCbKF6aI3W1oEtOv8zeAqe8FebkXZOUHDiCSD70AAAA=[0m[Pipeline] End of Pipeline
+Finished: SUCCESS

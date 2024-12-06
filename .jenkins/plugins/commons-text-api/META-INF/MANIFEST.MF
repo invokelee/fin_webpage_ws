@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Created-By: Maven Archiver 3.6.0
+Build-Jdk-Spec: 17
+Specification-Title: commons-text API Plugin
+Specification-Version: 1.12
+Implementation-Title: commons-text API Plugin
+Implementation-Version: 1.12.0-126.v7b_5df3fa_5444
+Group-Id: io.jenkins.plugins
+Artifact-Id: commons-text-api
+Short-Name: commons-text-api
+Long-Name: commons-text API Plugin
+Url: https://github.com/jenkinsci/commons-text-api-plugin
+Plugin-Version: 1.12.0-126.v7b_5df3fa_5444
+Hudson-Version: 2.426.3
+Jenkins-Version: 2.426.3
+Plugin-Dependencies: commons-lang3-api:3.14.0-76.vda_5591261cfe
+Plugin-Developers: 
+Support-Dynamic-Loading: true
+Plugin-License-Name: Apache-2.0
+Plugin-License-Url: https://opensource.org/licenses/Apache-2.0
+Plugin-ScmConnection: scm:git:https://github.com/jenkinsci/commons-text-
+ api-plugin.git
+Plugin-ScmTag: 7b5df3fa5444b5e3e27187a1743502ed9a622a7d
+Plugin-ScmUrl: https://github.com/jenkinsci/commons-text-api-plugin
+Plugin-GitHash: 7b5df3fa5444b5e3e27187a1743502ed9a622a7d
+Implementation-Build: 7b5df3fa5444b5e3e27187a1743502ed9a622a7d
+

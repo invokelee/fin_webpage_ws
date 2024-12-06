@@ -1,0 +1,252 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-build plugin="workflow-job@1385.vb_58b_86ea_fff1">
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-UserIdCause>
+            <userId>admin</userId>
+          </hudson.model.Cause_-UserIdCause>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+    <org.jenkinsci.plugins.workflow.libs.LibrariesAction plugin="pipeline-groovy-lib@744.v5b_556ee7c253">
+      <libraries/>
+    </org.jenkinsci.plugins.workflow.libs.LibrariesAction>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.ExecutionModelAction plugin="pipeline-model-definition@2.2218.v56d0cda_37c72">
+      <stagesUUID>eeeaa6df-28d6-494c-8e39-0fa885f04037</stagesUUID>
+      <pipelineDefs>
+        <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTPipelineDef plugin="pipeline-model-api@2.2218.v56d0cda_37c72">
+          <stages>
+            <stages>
+              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+                <name>Login to Docker Hub</name>
+                <branches>
+                  <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                    <name>default</name>
+                    <steps>
+                      <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStep>
+                        <name>sh</name>
+                        <args class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTNamedArgumentList">
+                          <arguments class="linked-hash-map">
+                            <entry>
+                              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                                <key>script</key>
+                              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                                <value class="string">
+                cat /home/invokelee/final_project/ros2_ws/src/fin_devops_docker/.my_password.txt | 
+                docker login --username invokelee --password-stdin
+                </value>
+                              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                            </entry>
+                          </arguments>
+                        </args>
+                      </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStep>
+                    </steps>
+                  </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                </branches>
+              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+                <name>Build Docker image</name>
+                <branches>
+                  <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                    <name>default</name>
+                    <steps>
+                      <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStep>
+                        <name>sh</name>
+                        <args class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTNamedArgumentList">
+                          <arguments class="linked-hash-map">
+                            <entry>
+                              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                                <key>script</key>
+                              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                                <value class="string">
+                cd /home/invokelee/final_project/ros2_ws/src/fin_devops_docker
+                docker build -f final_base_docker/Dockerfile -t invokelee/ros2-final-project-base:1.5 /home/invokelee/final_project
+                </value>
+                              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                            </entry>
+                          </arguments>
+                        </args>
+                      </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStep>
+                    </steps>
+                  </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                </branches>
+              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+                <name>Docker compose up and Start up the service</name>
+                <branches>
+                  <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                    <name>default</name>
+                    <steps>
+                      <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStep>
+                        <name>sh</name>
+                        <args class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTNamedArgumentList">
+                          <arguments class="linked-hash-map">
+                            <entry>
+                              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                                <key>script</key>
+                              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                                <value class="string">
+                DK_SIM_PS=`docker ps | grep &quot;fin_devops_docker-sim_&quot; | awk &apos;{print $1}&apos;`
+                DK_REAL_PS=`docker ps | grep &quot;fin_devops_docker-real_&quot; | awk &apos;{print $1}&apos;`
+                if [ ! -z &quot;$DK_SIM_PS&quot; -a &quot;$DK_SIM_PS&quot; != &quot; &quot; ]; then
+                    echo &quot;Service is running in simulation... Now it will be restarted&quot;
+                    cd /home/invokelee/final_project/ros2_ws/src/fin_devops_docker
+                    docker compose -f sim_final_docker_compose.yml restart
+                elif [ ! -z &quot;$DK_REAL_PS&quot; -a &quot;$DK_REAL_PS&quot; != &quot; &quot; ]; then
+                    echo &quot;Service is running in real robot... Now it will be restarted&quot;
+                    cd /home/invokelee/final_project/ros2_ws/src/fin_devops_docker
+                    docker compose -f real_final_docker_compose.yml restart
+                else
+                    echo &quot;Service is not running... Nothing will happen&quot;
+                fi
+                </value>
+                              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                            </entry>
+                          </arguments>
+                        </args>
+                      </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStep>
+                    </steps>
+                  </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                </branches>
+              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+                <name>Done</name>
+                <branches>
+                  <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                    <name>default</name>
+                    <steps>
+                      <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStep>
+                        <name>sh</name>
+                        <args class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTNamedArgumentList">
+                          <arguments class="linked-hash-map">
+                            <entry>
+                              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                                <key>script</key>
+                              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                                <value class="string">
+                echo &quot;Final Project in Simulation - Docker build and compose up Pipeline job completed !&quot;
+                </value>
+                              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                            </entry>
+                          </arguments>
+                        </args>
+                      </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStep>
+                    </steps>
+                  </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                </branches>
+              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+            </stages>
+            <uuid>eeeaa6df-28d6-494c-8e39-0fa885f04037</uuid>
+          </stages>
+          <agent>
+            <agentType>
+              <key>any</key>
+            </agentType>
+          </agent>
+        </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTPipelineDef>
+      </pipelineDefs>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.ExecutionModelAction>
+  </actions>
+  <queueId>15</queueId>
+  <timestamp>1733129712917</timestamp>
+  <startTime>1733129712961</startTime>
+  <result>SUCCESS</result>
+  <duration>30092</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <execution class="org.jenkinsci.plugins.workflow.cps.CpsFlowExecution">
+    <result>SUCCESS</result>
+    <script>pipeline {
+    agent any 
+    stages {
+        stage(&apos;Login to Docker Hub&apos;) {
+            steps {
+                sh &apos;&apos;&apos;
+                cat /home/invokelee/final_project/ros2_ws/src/fin_devops_docker/.my_password.txt | 
+                docker login --username invokelee --password-stdin
+                &apos;&apos;&apos;
+            }
+        }
+        stage(&apos;Build Docker image&apos;) {
+            steps {
+                sh &apos;&apos;&apos;
+                cd /home/invokelee/final_project/ros2_ws/src/fin_devops_docker
+                docker build -f final_base_docker/Dockerfile -t invokelee/ros2-final-project-base:1.5 /home/invokelee/final_project
+                &apos;&apos;&apos;
+            }
+        }
+        stage(&apos;Docker compose up and Start up the service&apos;) {
+            steps {
+                sh &apos;&apos;&apos;
+                DK_SIM_PS=`docker ps | grep &quot;fin_devops_docker-sim_&quot; | awk &apos;{print $1}&apos;`
+                DK_REAL_PS=`docker ps | grep &quot;fin_devops_docker-real_&quot; | awk &apos;{print $1}&apos;`
+                if [ ! -z &quot;$DK_SIM_PS&quot; -a &quot;$DK_SIM_PS&quot; != &quot; &quot; ]; then
+                    echo &quot;Service is running in simulation... Now it will be restarted&quot;
+                    cd /home/invokelee/final_project/ros2_ws/src/fin_devops_docker
+                    docker compose -f sim_final_docker_compose.yml restart
+                elif [ ! -z &quot;$DK_REAL_PS&quot; -a &quot;$DK_REAL_PS&quot; != &quot; &quot; ]; then
+                    echo &quot;Service is running in real robot... Now it will be restarted&quot;
+                    cd /home/invokelee/final_project/ros2_ws/src/fin_devops_docker
+                    docker compose -f real_final_docker_compose.yml restart
+                else
+                    echo &quot;Service is not running... Nothing will happen&quot;
+                fi
+                &apos;&apos;&apos;
+            }
+        }
+        stage(&apos;Done&apos;) {
+            steps {
+                sh &apos;&apos;&apos;
+                echo &quot;Final Project in Simulation - Docker build and compose up Pipeline job completed !&quot;
+                &apos;&apos;&apos;
+            }
+        }
+    }
+}
+</script>
+    <loadedScripts class="linked-hash-map"/>
+    <durabilityHint>MAX_SURVIVABILITY</durabilityHint>
+    <timings class="map">
+      <entry>
+        <string>flowNode</string>
+        <long>1056436410</long>
+      </entry>
+      <entry>
+        <string>classLoad</string>
+        <long>6632397059</long>
+      </entry>
+      <entry>
+        <string>runQueue</string>
+        <long>6089553695</long>
+      </entry>
+      <entry>
+        <string>run</string>
+        <long>10299094285</long>
+      </entry>
+      <entry>
+        <string>parse</string>
+        <long>760358289</long>
+      </entry>
+      <entry>
+        <string>saveProgram</string>
+        <long>2173723538</long>
+      </entry>
+    </timings>
+    <internalCalls class="sorted-set"/>
+    <sandbox>true</sandbox>
+    <iota>27</iota>
+    <head>1:27</head>
+    <done>true</done>
+    <resumeBlocked>false</resumeBlocked>
+    <storageDir>workflow-completed</storageDir>
+  </execution>
+  <completed>true</completed>
+  <checkouts class="hudson.util.PersistedList"/>
+</flow-build>

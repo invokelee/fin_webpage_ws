@@ -1,0 +1,19 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<fingerprint>
+  <timestamp>2024-12-02 21:40:30.374 UTC</timestamp>
+  <md5sum>fa1abb4ddbcad521d28a8936d6c07e0a</md5sum>
+  <fileName>Credential id=913803a4-7956-4652-98c3-99c6bb19fea0 name=invokelee (Jenkins SSH key)</fileName>
+  <usages>
+    <entry>
+      <string>sim_rb1_robot_cicd_pipeline</string>
+      <ranges>10-11</ranges>
+    </entry>
+  </usages>
+  <facets>
+    <com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet plugin="credentials@1380.va_435002fa_924">
+      <timestamp>1733184308311</timestamp>
+      <itemFullName>sim_rb1_robot_cicd_pipeline</itemFullName>
+      <timestamp0>1733176368779</timestamp0>
+    </com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet>
+  </facets>
+</fingerprint>
