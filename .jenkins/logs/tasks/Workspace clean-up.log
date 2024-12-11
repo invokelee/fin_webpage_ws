@@ -1,5 +1,10 @@
-Started at Thu Dec 05 22:06:02 KST 2024
+Started at Mon Dec 09 22:06:02 KST 2024
 Checking sim_rb1_robot_cicd_pipeline
 Checking TestJob
 Checking TestPipeline
-Finished at Thu Dec 05 22:06:02 KST 2024. 121ms
+Finished at Mon Dec 09 22:06:02 KST 2024. 36ms
+Started at Tue Dec 10 22:06:02 KST 2024
+Checking cleaner_robot_cicd_pipeline
+Checking TestJob
+Checking TestPipeline
+Finished at Tue Dec 10 22:06:02 KST 2024. 13ms
